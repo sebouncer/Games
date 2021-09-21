@@ -5,13 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>nz.willcox.games</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>games-parent</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>nz.willcox.games.home</groupId>
     <artifactId>home</artifactId>
-    <version>0.1-SNAPSHOT</version>
 
     <packaging>jar</packaging>
 

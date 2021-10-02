@@ -1,16 +1,23 @@
 package nz.willcox.games.tetris;
 
+import javax.inject.Inject;
+
 public class Application {
 
-    private final TetrisFrame tetrisFrame;
+    private final Controller controller;
 
-    public Application(TetrisFrame tetrisFrame) {
-        this.tetrisFrame = tetrisFrame;
+    @Inject
+    public Application(Controller controller) {
+        this.controller = controller;
     }
 
     public static void main(String[] args) {
         final TetrisComponent tetrisComponent = DaggerTetrisComponent.create();
 
-        tetrisComponent.getTetrisFrame().setup();
+        tetrisComponent.getApplication().initialise();
+    }
+
+    private void initialise() {
+        controller.initialise();
     }
 }

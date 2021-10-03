@@ -1,10 +1,9 @@
 package nz.willcox.games.tetris;
 
-import nz.willcox.games.tetris.model.CurrentPage;
+import nz.willcox.games.tetris.model.page.CurrentPage;
 import nz.willcox.games.tetris.model.Listener;
-import nz.willcox.games.tetris.model.PageEnum;
+import nz.willcox.games.tetris.model.page.PageEnum;
 import nz.willcox.games.tetris.service.GameCreator;
-import nz.willcox.games.tetris.view.TetrisPanel;
 import nz.willcox.games.tetris.view.game.GamePanel;
 import nz.willcox.games.tetris.view.menu.MenuPanel;
 import nz.willcox.games.tetris.view.options.OptionsPanel;

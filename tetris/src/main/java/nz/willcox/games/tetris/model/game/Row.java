@@ -1,4 +1,4 @@
-package nz.willcox.games.tetris.model;
+package nz.willcox.games.tetris.model.game;
 
 import java.util.List;
 

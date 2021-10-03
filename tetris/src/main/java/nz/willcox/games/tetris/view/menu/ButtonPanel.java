@@ -1,8 +1,8 @@
 package nz.willcox.games.tetris.view.menu;
 
-import nz.willcox.games.tetris.model.CurrentPage;
-import nz.willcox.games.tetris.model.GameConfig;
-import nz.willcox.games.tetris.model.PageEnum;
+import nz.willcox.games.tetris.model.page.CurrentPage;
+import nz.willcox.games.tetris.model.page.GameConfig;
+import nz.willcox.games.tetris.model.page.PageEnum;
 import nz.willcox.games.tetris.view.component.MenuButton;
 import nz.willcox.games.tetris.view.controls.PlayerEventListener;
 import nz.willcox.games.tetris.view.controls.PlayerOneControls;

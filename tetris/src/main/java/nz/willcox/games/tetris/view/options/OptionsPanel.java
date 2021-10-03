@@ -1,7 +1,7 @@
 package nz.willcox.games.tetris.view.options;
 
-import nz.willcox.games.tetris.model.CurrentPage;
-import nz.willcox.games.tetris.model.PageEnum;
+import nz.willcox.games.tetris.model.page.CurrentPage;
+import nz.willcox.games.tetris.model.page.PageEnum;
 import nz.willcox.games.tetris.view.TetrisPanel;
 import nz.willcox.games.tetris.view.controls.PlayerEventListener;
 import nz.willcox.games.tetris.view.controls.PlayerOneControls;

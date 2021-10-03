@@ -1,8 +1,8 @@
 package nz.willcox.games.tetris.service;
 
-import nz.willcox.games.tetris.model.Block;
-import nz.willcox.games.tetris.model.GameData;
-import nz.willcox.games.tetris.model.Row;
+import nz.willcox.games.tetris.model.game.Block;
+import nz.willcox.games.tetris.model.game.GameData;
+import nz.willcox.games.tetris.model.game.Row;
 
 import javax.inject.Inject;
 import java.util.ArrayList;

@@ -1,4 +1,6 @@
-package nz.willcox.games.tetris.model;
+package nz.willcox.games.tetris.model.page;
+
+import nz.willcox.games.tetris.model.EventListener;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

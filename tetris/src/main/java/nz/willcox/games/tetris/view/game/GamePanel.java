@@ -5,6 +5,7 @@ import nz.willcox.games.tetris.model.game.Block;
 import nz.willcox.games.tetris.model.page.GameConfig;
 import nz.willcox.games.tetris.model.game.GameData;
 import nz.willcox.games.tetris.model.game.Row;
+import nz.willcox.games.tetris.service.GameRunner;
 import nz.willcox.games.tetris.view.TetrisPanel;
 import nz.willcox.games.tetris.view.controls.PlayerControls;
 import nz.willcox.games.tetris.view.controls.PlayerOneControls;
@@ -22,6 +23,7 @@ import static nz.willcox.games.tetris.Constants.SCREEN_WIDTH;
 public class GamePanel extends JPanel implements TetrisPanel {
 
     private final GameConfig gameConfig;
+    private final GameRunner gameRunner;
     private final PlayerOneControls playerOneControls;
     private final PlayerTwoControls playerTwoControls;
 
@@ -30,10 +32,12 @@ public class GamePanel extends JPanel implements TetrisPanel {
     @Inject
     public GamePanel(
             GameConfig gameConfig,
+            GameRunner gameRunner,
             PlayerOneControls playerOneControls,
             PlayerTwoControls playerTwoControls
     ) {
         this.gameConfig = gameConfig;
+        this.gameRunner = gameRunner;
         this.playerOneControls = playerOneControls;
         this.playerTwoControls = playerTwoControls;
         this.playerBorderPanels = new ArrayList<>();
@@ -43,7 +47,9 @@ public class GamePanel extends JPanel implements TetrisPanel {
     }
 
     public void initialise() {
-        final PlayerBorderPanel playerBorderPanel = new PlayerBorderPanel(playerOneControls);
+        gameRunner.initialiseOnePlayer();
+
+        final PlayerBorderPanel playerBorderPanel = new PlayerBorderPanel.Factory().create(gameRunner.getPlayerOneGameData(), playerOneControls);
         playerBorderPanels.add(playerBorderPanel);
         playerBorderPanel.setBounds(50 , 50, PlayerBorderPanel.WIDTH, PlayerBorderPanel.HEIGHT);
         add(playerBorderPanel);

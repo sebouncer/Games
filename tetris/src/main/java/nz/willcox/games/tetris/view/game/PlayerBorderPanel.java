@@ -1,5 +1,6 @@
 package nz.willcox.games.tetris.view.game;
 
+import nz.willcox.games.tetris.model.game.GameData;
 import nz.willcox.games.tetris.view.controls.PlayerControls;
 
 import javax.swing.*;
@@ -16,18 +17,21 @@ public class PlayerBorderPanel extends JPanel {
     public static final int WIDTH = BORDER_WIDTH * 2 + BLOCK_WIDTH * NUM_BLOCKS_IN_COLUMN;
     public static final int HEIGHT = BORDER_WIDTH * 2 + BLOCK_HEIGHT * NUM_BLOCKS_IN_ROW;
 
+    private final GameData gameData;
     private final PlayerControls playerControls;
     private final PlayerPanel playerPanel;
 
     public PlayerBorderPanel(
+            GameData gameData,
             PlayerControls playerControls
     ) {
+        this.gameData = gameData;
         this.playerControls = playerControls;
         setSize(WIDTH + BORDER_WIDTH*2, HEIGHT + BORDER_WIDTH*2);
         setLayout(null);
 //        setBackground(Color.BLACK);
 
-        playerPanel = new PlayerPanel.Factory().create(playerControls);
+        playerPanel = new PlayerPanel.Factory().create(gameData, playerControls);
         playerPanel.setBounds(BORDER_WIDTH , BORDER_WIDTH, PlayerPanel.WIDTH, PlayerPanel.HEIGHT);
         add(playerPanel);
     }
@@ -51,9 +55,10 @@ public class PlayerBorderPanel extends JPanel {
 
     public static class Factory {
         public PlayerBorderPanel create(
+                GameData gameData,
                 PlayerControls playerControls
         ) {
-            return new PlayerBorderPanel(playerControls);
+            return new PlayerBorderPanel(gameData, playerControls);
         }
     }
 }

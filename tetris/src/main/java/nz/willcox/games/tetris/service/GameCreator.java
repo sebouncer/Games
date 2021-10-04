@@ -1,34 +1,56 @@
 package nz.willcox.games.tetris.service;
 
+import nz.willcox.games.tetris.Constants;
+import nz.willcox.games.tetris.factory.SquareFactory;
 import nz.willcox.games.tetris.model.game.Block;
 import nz.willcox.games.tetris.model.game.GameData;
 import nz.willcox.games.tetris.model.game.Row;
+import nz.willcox.games.tetris.model.game.shape.CurrentShape;
+import nz.willcox.games.tetris.model.game.shape.LocationPoint;
+import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static nz.willcox.games.tetris.Constants.NUM_BLOCKS_IN_COLUMN;
+import static nz.willcox.games.tetris.Constants.NUM_BLOCKS_IN_ROW;
+import static nz.willcox.games.tetris.model.game.BlockColours.EMPTY_BLOCK;
+
 public class GameCreator {
 
-    private static final int BLOCKS_WIDE = 10;
-    private static final int BLOCKS_HIGH = 40;
     private static final int INITIAL_SCORE = 0;
-
-    private final BlocksCreator blocksCreator;
+    private final SquareFactory squareFactory;
 
     @Inject
-    public GameCreator(BlocksCreator blocksCreator) {
-        this.blocksCreator = blocksCreator;
+    public GameCreator(SquareFactory squareFactory) {
+        this.squareFactory = squareFactory;
     }
 
     public GameData createGame() {
+
+
+        final LocationPoint startMidLocation = new LocationPoint.Builder()
+                .topX((NUM_BLOCKS_IN_COLUMN-1)/2 * Constants.BLOCK_WIDTH)
+                .topY(0 - Constants.BLOCK_HEIGHT)
+                .build();
+
+        final List<ShapeBlock> shapeBlocks = squareFactory.create(startMidLocation);
+
+        final CurrentShape currentShape = new CurrentShape();
+        currentShape.setNewShapeBlocks(shapeBlocks);
+
         final List<Row> rowData = createRows();
-        return new GameData.Builder().score(INITIAL_SCORE).rowData(rowData).build();
+        return new GameData.Builder()
+                .score(INITIAL_SCORE)
+                .rowData(rowData)
+                .currentShape(currentShape)
+                .build();
     }
 
     private List<Row> createRows() {
         final List<Row> rowData = new ArrayList<>();
-        for (int i = 0; i < BLOCKS_HIGH; i++) {
+        for (int i = 0; i < NUM_BLOCKS_IN_ROW; i++) {
             rowData.add(createRow());
         }
         return rowData;
@@ -36,8 +58,8 @@ public class GameCreator {
 
     private Row createRow() {
         final List<Block> blocks = new ArrayList<>();
-        for (int i = 0; i < BLOCKS_WIDE; i++) {
-            blocks.add(blocksCreator.getBlankBlock());
+        for (int i = 0; i < NUM_BLOCKS_IN_COLUMN; i++) {
+            blocks.add(EMPTY_BLOCK);
         }
         return new Row.Builder().blocks(blocks).build();
     }

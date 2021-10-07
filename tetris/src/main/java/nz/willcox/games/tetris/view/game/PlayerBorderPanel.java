@@ -8,14 +8,14 @@ import java.awt.*;
 
 import static nz.willcox.games.tetris.Constants.BLOCK_HEIGHT;
 import static nz.willcox.games.tetris.Constants.BLOCK_WIDTH;
-import static nz.willcox.games.tetris.Constants.NUM_BLOCKS_IN_COLUMN;
-import static nz.willcox.games.tetris.Constants.NUM_BLOCKS_IN_ROW;
+import static nz.willcox.games.tetris.Constants.NUM_COLUMNS;
+import static nz.willcox.games.tetris.Constants.NUM_ROWS;
 
 public class PlayerBorderPanel extends JPanel {
 
     private static final int BORDER_WIDTH = 2;
-    public static final int WIDTH = BORDER_WIDTH * 2 + BLOCK_WIDTH * NUM_BLOCKS_IN_COLUMN;
-    public static final int HEIGHT = BORDER_WIDTH * 2 + BLOCK_HEIGHT * NUM_BLOCKS_IN_ROW;
+    public static final int WIDTH = BORDER_WIDTH * 2 + BLOCK_WIDTH * NUM_COLUMNS;
+    public static final int HEIGHT = BORDER_WIDTH * 2 + BLOCK_HEIGHT * NUM_ROWS;
 
     private final GameData gameData;
     private final PlayerControls playerControls;

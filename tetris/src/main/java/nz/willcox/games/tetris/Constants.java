@@ -7,6 +7,6 @@ public class Constants {
 
     public static final int BLOCK_WIDTH = 40;
     public static final int BLOCK_HEIGHT = 40;
-    public static final int NUM_BLOCKS_IN_ROW = 20;
-    public static final int NUM_BLOCKS_IN_COLUMN = 10;
+    public static final int NUM_ROWS = 20;
+    public static final int NUM_COLUMNS = 10;
 }

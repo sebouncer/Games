@@ -13,8 +13,8 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static nz.willcox.games.tetris.Constants.NUM_BLOCKS_IN_COLUMN;
-import static nz.willcox.games.tetris.Constants.NUM_BLOCKS_IN_ROW;
+import static nz.willcox.games.tetris.Constants.NUM_COLUMNS;
+import static nz.willcox.games.tetris.Constants.NUM_ROWS;
 import static nz.willcox.games.tetris.model.game.BlockColours.EMPTY_BLOCK;
 
 public class GameCreator {
@@ -31,7 +31,7 @@ public class GameCreator {
 
 
         final LocationPoint startMidLocation = new LocationPoint.Builder()
-                .topX((NUM_BLOCKS_IN_COLUMN-1)/2 * Constants.BLOCK_WIDTH)
+                .topX((NUM_COLUMNS -1)/2 * Constants.BLOCK_WIDTH)
                 .topY(0 - Constants.BLOCK_HEIGHT)
                 .build();
 
@@ -50,7 +50,7 @@ public class GameCreator {
 
     private List<Row> createRows() {
         final List<Row> rowData = new ArrayList<>();
-        for (int i = 0; i < NUM_BLOCKS_IN_ROW; i++) {
+        for (int i = 0; i < NUM_ROWS; i++) {
             rowData.add(createRow());
         }
         return rowData;
@@ -58,7 +58,7 @@ public class GameCreator {
 
     private Row createRow() {
         final List<Block> blocks = new ArrayList<>();
-        for (int i = 0; i < NUM_BLOCKS_IN_COLUMN; i++) {
+        for (int i = 0; i < NUM_COLUMNS; i++) {
             blocks.add(EMPTY_BLOCK);
         }
         return new Row.Builder().blocks(blocks).build();

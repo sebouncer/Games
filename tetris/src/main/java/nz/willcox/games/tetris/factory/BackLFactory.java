@@ -9,22 +9,22 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SquareFactory {
+public class BackLFactory {
 
     private final ShapeFactory shapeFactory;
 
     @Inject
-    public SquareFactory(ShapeFactory shapeFactory) {
+    public BackLFactory(ShapeFactory shapeFactory) {
         this.shapeFactory = shapeFactory;
     }
 
     public List<ShapeBlock> create(LocationPoint startMidLocation) {
-        final Block block = BlockColours.YELLOW_BLOCK;
+        final Block block = BlockColours.DARK_BLUE_BLOCK;
         final ArrayList<ShapeBlock> shapeBlocks = new ArrayList<>();
         shapeBlocks.add(shapeFactory.createShapeBlock(startMidLocation, block));
-        shapeBlocks.add(shapeFactory.createShapeBlock(shapeFactory.blockRightOf(startMidLocation), block));
+        shapeBlocks.add(shapeFactory.createShapeBlock(shapeFactory.blockLeftOf(startMidLocation), block));
         shapeBlocks.add(shapeFactory.createShapeBlock(shapeFactory.blockAboveOf(startMidLocation), block));
-        shapeBlocks.add(shapeFactory.createShapeBlock(shapeFactory.blockAboveOf(shapeFactory.blockRightOf(startMidLocation)), block));
+        shapeBlocks.add(shapeFactory.createShapeBlock(shapeFactory.blockAboveOf(shapeFactory.blockAboveOf(startMidLocation)), block));
         return shapeBlocks;
     }
 }

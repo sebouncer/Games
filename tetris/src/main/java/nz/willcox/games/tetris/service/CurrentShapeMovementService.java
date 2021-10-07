@@ -22,6 +22,19 @@ public class CurrentShapeMovementService {
     @Inject
     public CurrentShapeMovementService() {}
 
+    public boolean willCollideOnMove(GameData gameData) {
+        final CurrentShape currentShape = gameData.getCurrentShape();
+
+        for (ShapeBlock shapeBlock : currentShape.getShapeBlocks()) {
+            final int newLocationYPoint = getNewLocationYPoint(shapeBlock);
+            boolean collision = checkCollisions(gameData.getRowData(), shapeBlock.getLocationPoint().getTopX(), newLocationYPoint);
+            if (collision) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void moveCurrentShapeDown(GameData gameData) {
         final CurrentShape currentShape = gameData.getCurrentShape();
 
@@ -37,6 +50,7 @@ public class CurrentShapeMovementService {
         }
 
         if (hasCollided) {
+            // If any block outside the top of grid, then game over
             saveCurrentShapeIntoGrid(gameData.getCurrentShape(), gameData.getRowData());
             gameData.getCurrentShape().removeBlocks();
         } else {

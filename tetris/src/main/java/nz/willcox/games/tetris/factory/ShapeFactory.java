@@ -1,6 +1,7 @@
 package nz.willcox.games.tetris.factory;
 
 import nz.willcox.games.tetris.Constants;
+import nz.willcox.games.tetris.model.game.Block;
 import nz.willcox.games.tetris.model.game.BlockColours;
 import nz.willcox.games.tetris.model.game.shape.LocationPoint;
 import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
@@ -33,9 +34,9 @@ public class ShapeFactory {
                 .build();
     }
 
-    public ShapeBlock createShapeBlock(LocationPoint locationPoint) {
+    public ShapeBlock createShapeBlock(LocationPoint locationPoint, Block block) {
         return new ShapeBlock.Builder()
-                .block(BlockColours.YELLOW_BLOCK)
+                .block(block)
                 .locationPoint(locationPoint)
                 .build();
     }

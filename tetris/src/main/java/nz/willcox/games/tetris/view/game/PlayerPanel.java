@@ -21,7 +21,7 @@ import static nz.willcox.games.tetris.Constants.NUM_ROWS;
 
 public class PlayerPanel extends JPanel implements Listener {
 
-    private static final int BLOCK_BORDER_WIDTH = 2;
+    private static final int BLOCK_BORDER_WIDTH = 1;
     public static final int WIDTH = BLOCK_WIDTH * NUM_COLUMNS;
     public static final int HEIGHT = BLOCK_HEIGHT * NUM_ROWS;
 
@@ -97,14 +97,20 @@ public class PlayerPanel extends JPanel implements Listener {
         if (block == BlockColours.GREEN_BLOCK) {
             return Color.GREEN;
         }
+        if (block == BlockColours.ORANGE_BLOCK) {
+            return Color.ORANGE;
+        }
+        if (block == BlockColours.RED_BLOCK) {
+            return Color.RED;
+        }
         return Color.WHITE;
     }
 
     private Color getBlockBorderColour(Block block) {
-        if (block == BlockColours.YELLOW_BLOCK || block == BlockColours.GREEN_BLOCK) {
+        if (block != BlockColours.EMPTY_BLOCK) {
             return Color.BLACK;
         }
-        return Color.ORANGE;
+        return Color.LIGHT_GRAY;
     }
 
     public void destroy() {

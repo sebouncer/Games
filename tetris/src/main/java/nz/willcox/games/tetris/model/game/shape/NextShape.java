@@ -16,9 +16,12 @@ public class NextShape extends EventListener {
     }
 
     public void setNewShapeBlocks(List<ShapeBlock> newShapeBlocks) {
-        this.shapeBlocks.clear();
         this.shapeBlocks.addAll(newShapeBlocks);
         triggerListeners();
+    }
+
+    public void removeBlocks() {
+        this.shapeBlocks.clear();
     }
 
     public List<ShapeBlock> getShapeBlocks() {

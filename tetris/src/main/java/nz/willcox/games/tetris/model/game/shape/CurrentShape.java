@@ -16,12 +16,19 @@ public class CurrentShape extends EventListener {
     }
 
     public void setNewShapeBlocks(List<ShapeBlock> newShapeBlocks) {
-        this.shapeBlocks.clear();
         this.shapeBlocks.addAll(newShapeBlocks);
         triggerListeners();
     }
 
     public List<ShapeBlock> getShapeBlocks() {
         return shapeBlocks;
+    }
+
+    public boolean hasShape() {
+        return !shapeBlocks.isEmpty();
+    }
+
+    public void removeBlocks() {
+        this.shapeBlocks.clear();
     }
 }

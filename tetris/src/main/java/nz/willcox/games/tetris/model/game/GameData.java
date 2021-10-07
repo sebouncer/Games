@@ -1,6 +1,7 @@
 package nz.willcox.games.tetris.model.game;
 
 import nz.willcox.games.tetris.model.game.shape.CurrentShape;
+import nz.willcox.games.tetris.model.game.shape.NextShape;
 
 import java.util.List;
 
@@ -8,11 +9,13 @@ public class GameData {
 
     private final List<Row> rowData;
     private CurrentShape currentShape;
+    private NextShape nextShape;
     private int score;
 
     private GameData(Builder builder) {
         this.rowData = builder.rowData;
         this.currentShape = builder.currentShape;
+        this.nextShape = builder.nextShape;
         this.score = builder.score;
     }
 
@@ -22,6 +25,10 @@ public class GameData {
 
     public CurrentShape getCurrentShape() {
         return currentShape;
+    }
+
+    public NextShape getNextShape() {
+        return nextShape;
     }
 
     public void setCurrentShape(CurrentShape currentShape) {
@@ -39,6 +46,7 @@ public class GameData {
     public static class Builder {
         private List<Row> rowData;
         private CurrentShape currentShape;
+        private NextShape nextShape;
         private int score;
 
         public Builder rowData(List<Row> rowData) {
@@ -48,6 +56,11 @@ public class GameData {
 
         public Builder currentShape(CurrentShape currentShape) {
             this.currentShape = currentShape;
+            return this;
+        }
+
+        public Builder nextShape(NextShape nextShape) {
+            this.nextShape = nextShape;
             return this;
         }
 

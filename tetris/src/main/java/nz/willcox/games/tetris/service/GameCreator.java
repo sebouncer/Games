@@ -1,12 +1,10 @@
 package nz.willcox.games.tetris.service;
 
-import nz.willcox.games.tetris.Constants;
-import nz.willcox.games.tetris.factory.SquareFactory;
 import nz.willcox.games.tetris.model.game.Block;
 import nz.willcox.games.tetris.model.game.GameData;
 import nz.willcox.games.tetris.model.game.Row;
 import nz.willcox.games.tetris.model.game.shape.CurrentShape;
-import nz.willcox.games.tetris.model.game.shape.LocationPoint;
+import nz.willcox.games.tetris.model.game.shape.NextShape;
 import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
 
 import javax.inject.Inject;
@@ -20,31 +18,26 @@ import static nz.willcox.games.tetris.model.game.BlockColours.EMPTY_BLOCK;
 public class GameCreator {
 
     private static final int INITIAL_SCORE = 0;
-    private final SquareFactory squareFactory;
+    private final RandomNextShapeService randomNextShapeService;
 
     @Inject
-    public GameCreator(SquareFactory squareFactory) {
-        this.squareFactory = squareFactory;
+    public GameCreator(RandomNextShapeService randomNextShapeService) {
+        this.randomNextShapeService = randomNextShapeService;
     }
 
     public GameData createGame() {
 
+        final List<ShapeBlock> shapeBlocks = randomNextShapeService.getRandomNextShapeBlocks();
 
-        final LocationPoint startMidLocation = new LocationPoint.Builder()
-                .topX((NUM_COLUMNS -1)/2 * Constants.BLOCK_WIDTH)
-                .topY(0 - Constants.BLOCK_HEIGHT)
-                .build();
-
-        final List<ShapeBlock> shapeBlocks = squareFactory.create(startMidLocation);
-
-        final CurrentShape currentShape = new CurrentShape();
-        currentShape.setNewShapeBlocks(shapeBlocks);
+        final NextShape nextShape = new NextShape();
+        nextShape.setNewShapeBlocks(shapeBlocks);
 
         final List<Row> rowData = createRows();
         return new GameData.Builder()
                 .score(INITIAL_SCORE)
                 .rowData(rowData)
-                .currentShape(currentShape)
+                .currentShape(new CurrentShape())
+                .nextShape(nextShape)
                 .build();
     }
 

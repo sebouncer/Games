@@ -33,15 +33,30 @@ public class CurrentShapeMovementService {
             if (collision) {
                 hasCollided = true;
             }
+            System.out.println(" Collision = " + collision);
         }
 
-        if (!hasCollided) {
+        if (hasCollided) {
+            saveCurrentShapeIntoGrid(gameData.getCurrentShape(), gameData.getRowData());
+            gameData.getCurrentShape().removeBlocks();
+        } else {
             for (ShapeBlock shapeBlock : currentShape.getShapeBlocks()) {
                 final int newLocationYPoint = getNewLocationYPoint(shapeBlock);
                 shapeBlock.getLocationPoint().setTopY(newLocationYPoint);
             }
         }
         currentShape.triggerListeners();
+    }
+
+    private void saveCurrentShapeIntoGrid(
+            CurrentShape currentShape,
+            List<Row> rowData
+    ) {
+        for (ShapeBlock shapeBlock : currentShape.getShapeBlocks()) {
+            final int column = getColumn(shapeBlock.getLocationPoint().getTopX());
+            final int row = getRow(shapeBlock.getLocationPoint().getTopY());
+            rowData.get(row).getBlocks().set(column, shapeBlock.getBlock());
+        }
     }
 
     private int getNewLocationYPoint(ShapeBlock shapeBlock) {
@@ -57,9 +72,10 @@ public class CurrentShapeMovementService {
         final int column = getColumn(newLocationXPoint);
         final int row = getRow(newLocationYPoint);
 
-        System.out.println("row = " +row + "   column = " + column);
+        System.out.print("row = " +row + "   column = " + column);
 
-        if (column < 0 || column >= NUM_COLUMNS || row < 0) {
+//        if (column < 0 || column >= NUM_COLUMNS || row < 0) {
+        if (row < 0) {
             return true;
         }
 

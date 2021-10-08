@@ -1,37 +1,51 @@
 package nz.willcox.games.tetris.service;
 
 import nz.willcox.games.tetris.Constants;
+import nz.willcox.games.tetris.factory.BackLFactory;
 import nz.willcox.games.tetris.factory.FrontLFactory;
+import nz.willcox.games.tetris.factory.LongFactory;
+import nz.willcox.games.tetris.factory.SFactory;
+import nz.willcox.games.tetris.factory.ShapeFactory;
 import nz.willcox.games.tetris.factory.SquareFactory;
+import nz.willcox.games.tetris.factory.TriangleFactory;
 import nz.willcox.games.tetris.factory.ZFactory;
 import nz.willcox.games.tetris.model.game.shape.LocationPoint;
 import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 import static nz.willcox.games.tetris.Constants.NUM_COLUMNS;
 
 public class RandomNextShapeService {
 
-    private final SquareFactory squareFactory;
-    private final FrontLFactory frontLFactory;
-    private final ZFactory zFactory;
+    private final List<ShapeFactory> shapeFactories;
 
     @Inject
     public RandomNextShapeService(
-            SquareFactory squareFactory,
+            BackLFactory backLFactory,
             FrontLFactory frontLFactory,
+            LongFactory longFactory,
+            SFactory sFactory,
+            SquareFactory squareFactory,
+            TriangleFactory triangleFactory,
             ZFactory zFactory
     ) {
-        this.squareFactory = squareFactory;
-        this.frontLFactory = frontLFactory;
-        this.zFactory = zFactory;
+        shapeFactories = new ArrayList<>();
+        shapeFactories.add(backLFactory);
+        shapeFactories.add(frontLFactory);
+        shapeFactories.add(longFactory);
+        shapeFactories.add(sFactory);
+        shapeFactories.add(squareFactory);
+        shapeFactories.add(triangleFactory);
+        shapeFactories.add(zFactory);
     }
 
     public List<ShapeBlock> getRandomNextShapeBlocks() {
-
-        return zFactory.create(createStartMidLocation());
+        final int randomShapeFactoryIndex = (int) (Math.random() * shapeFactories.size());
+        final ShapeFactory shapeFactory = shapeFactories.get(randomShapeFactoryIndex);
+        return shapeFactory.create(createStartMidLocation());
     }
 
     private LocationPoint createStartMidLocation() {

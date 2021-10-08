@@ -9,22 +9,23 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SquareFactory {
+public class SquareFactory implements ShapeFactory {
 
-    private final ShapeFactory shapeFactory;
+    private final ShapePlacement shapePlacement;
 
     @Inject
-    public SquareFactory(ShapeFactory shapeFactory) {
-        this.shapeFactory = shapeFactory;
+    public SquareFactory(ShapePlacement shapePlacement) {
+        this.shapePlacement = shapePlacement;
     }
 
+    @Override
     public List<ShapeBlock> create(LocationPoint startMidLocation) {
         final Block block = BlockColours.YELLOW_BLOCK;
         final ArrayList<ShapeBlock> shapeBlocks = new ArrayList<>();
-        shapeBlocks.add(shapeFactory.createShapeBlock(startMidLocation, block));
-        shapeBlocks.add(shapeFactory.createShapeBlock(shapeFactory.blockRightOf(startMidLocation), block));
-        shapeBlocks.add(shapeFactory.createShapeBlock(shapeFactory.blockAboveOf(startMidLocation), block));
-        shapeBlocks.add(shapeFactory.createShapeBlock(shapeFactory.blockAboveOf(shapeFactory.blockRightOf(startMidLocation)), block));
+        shapeBlocks.add(shapePlacement.createShapeBlock(startMidLocation, block));
+        shapeBlocks.add(shapePlacement.createShapeBlock(shapePlacement.blockRightOf(startMidLocation), block));
+        shapeBlocks.add(shapePlacement.createShapeBlock(shapePlacement.blockAboveOf(startMidLocation), block));
+        shapeBlocks.add(shapePlacement.createShapeBlock(shapePlacement.blockAboveOf(shapePlacement.blockRightOf(startMidLocation)), block));
         return shapeBlocks;
     }
 }

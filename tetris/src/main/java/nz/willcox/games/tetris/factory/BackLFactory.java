@@ -9,22 +9,23 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BackLFactory {
+public class BackLFactory implements ShapeFactory {
 
-    private final ShapeFactory shapeFactory;
+    private final ShapePlacement shapePlacement;
 
     @Inject
-    public BackLFactory(ShapeFactory shapeFactory) {
-        this.shapeFactory = shapeFactory;
+    public BackLFactory(ShapePlacement shapePlacement) {
+        this.shapePlacement = shapePlacement;
     }
 
+    @Override
     public List<ShapeBlock> create(LocationPoint startMidLocation) {
         final Block block = BlockColours.DARK_BLUE_BLOCK;
         final ArrayList<ShapeBlock> shapeBlocks = new ArrayList<>();
-        shapeBlocks.add(shapeFactory.createShapeBlock(startMidLocation, block));
-        shapeBlocks.add(shapeFactory.createShapeBlock(shapeFactory.blockLeftOf(startMidLocation), block));
-        shapeBlocks.add(shapeFactory.createShapeBlock(shapeFactory.blockAboveOf(startMidLocation), block));
-        shapeBlocks.add(shapeFactory.createShapeBlock(shapeFactory.blockAboveOf(shapeFactory.blockAboveOf(startMidLocation)), block));
+        shapeBlocks.add(shapePlacement.createShapeBlock(startMidLocation, block));
+        shapeBlocks.add(shapePlacement.createShapeBlock(shapePlacement.blockLeftOf(startMidLocation), block));
+        shapeBlocks.add(shapePlacement.createShapeBlock(shapePlacement.blockAboveOf(startMidLocation), block));
+        shapeBlocks.add(shapePlacement.createShapeBlock(shapePlacement.blockAboveOf(shapePlacement.blockAboveOf(startMidLocation)), block));
         return shapeBlocks;
     }
 }

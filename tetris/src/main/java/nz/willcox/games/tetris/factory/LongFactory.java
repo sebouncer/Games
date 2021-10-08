@@ -9,22 +9,23 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LongFactory {
+public class LongFactory implements ShapeFactory {
 
-    private final ShapeFactory shapeFactory;
+    private final ShapePlacement shapePlacement;
 
     @Inject
-    public LongFactory(ShapeFactory shapeFactory) {
-        this.shapeFactory = shapeFactory;
+    public LongFactory(ShapePlacement shapePlacement) {
+        this.shapePlacement = shapePlacement;
     }
 
+    @Override
     public List<ShapeBlock> create(LocationPoint startMidLocation) {
         final Block block = BlockColours.CYAN_BLOCK;
         final ArrayList<ShapeBlock> shapeBlocks = new ArrayList<>();
-        shapeBlocks.add(shapeFactory.createShapeBlock(startMidLocation, block));
-        shapeBlocks.add(shapeFactory.createShapeBlock(shapeFactory.blockLeftOf(startMidLocation), block));
-        shapeBlocks.add(shapeFactory.createShapeBlock(shapeFactory.blockRightOf(startMidLocation), block));
-        shapeBlocks.add(shapeFactory.createShapeBlock(shapeFactory.blockRightOf(shapeFactory.blockRightOf(startMidLocation)), block));
+        shapeBlocks.add(shapePlacement.createShapeBlock(startMidLocation, block));
+        shapeBlocks.add(shapePlacement.createShapeBlock(shapePlacement.blockLeftOf(startMidLocation), block));
+        shapeBlocks.add(shapePlacement.createShapeBlock(shapePlacement.blockRightOf(startMidLocation), block));
+        shapeBlocks.add(shapePlacement.createShapeBlock(shapePlacement.blockRightOf(shapePlacement.blockRightOf(startMidLocation)), block));
         return shapeBlocks;
     }
 }

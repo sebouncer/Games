@@ -12,7 +12,10 @@ import nz.willcox.games.tetris.view.controls.PlayerControls;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static nz.willcox.games.tetris.Constants.BLOCK_HEIGHT;
 import static nz.willcox.games.tetris.Constants.BLOCK_WIDTH;
@@ -27,6 +30,7 @@ public class PlayerPanel extends JPanel implements Listener {
 
     private final GameData gameData;
     private final PlayerControls playerControls;
+    private final HashMap<Block, Color> colourBlocks;
 
     public PlayerPanel(
             GameData gameData,
@@ -34,7 +38,21 @@ public class PlayerPanel extends JPanel implements Listener {
     ) {
         this.gameData = gameData;
         this.playerControls = playerControls;
+        this.colourBlocks = new HashMap<>();
+        defineBlockColors();
         gameData.getCurrentShape().addListener(this);
+    }
+
+    private void defineBlockColors() {
+        colourBlocks.put(BlockColours.EMPTY_BLOCK, Color.WHITE);
+        colourBlocks.put(BlockColours.YELLOW_BLOCK, Color.YELLOW);
+        colourBlocks.put(BlockColours.GREEN_BLOCK, Color.GREEN);
+        colourBlocks.put(BlockColours.ORANGE_BLOCK, Color.ORANGE);
+        colourBlocks.put(BlockColours.DARK_BLUE_BLOCK, new Color(0, 0,255));
+        colourBlocks.put(BlockColours.RED_BLOCK, Color.RED);
+        colourBlocks.put(BlockColours.CYAN_BLOCK, Color.CYAN);
+        colourBlocks.put(BlockColours.PURPLE_BLOCK, new Color(102, 0,153));
+
     }
 
     public void paintComponent(Graphics g) {
@@ -91,19 +109,7 @@ public class PlayerPanel extends JPanel implements Listener {
     }
 
     private Color getBlockColour(Block block) {
-        if (block == BlockColours.YELLOW_BLOCK) {
-            return Color.YELLOW;
-        }
-        if (block == BlockColours.GREEN_BLOCK) {
-            return Color.GREEN;
-        }
-        if (block == BlockColours.ORANGE_BLOCK) {
-            return Color.ORANGE;
-        }
-        if (block == BlockColours.RED_BLOCK) {
-            return Color.RED;
-        }
-        return Color.WHITE;
+        return colourBlocks.get(block);
     }
 
     private Color getBlockBorderColour(Block block) {

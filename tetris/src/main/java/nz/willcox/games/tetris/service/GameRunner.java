@@ -5,6 +5,7 @@ import nz.willcox.games.tetris.model.game.BlockColours;
 import nz.willcox.games.tetris.model.game.GameData;
 import nz.willcox.games.tetris.model.game.Row;
 import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
+import nz.willcox.games.tetris.view.controls.PlayerOneControls;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -16,6 +17,7 @@ public class GameRunner {
     private final GameCreator gameCreator;
     private final CurrentShapeMovementService currentShapeMovementService;
     private final RandomNextShapeService randomNextShapeService;
+    private final PlayerOneControls playerOneControls;
 
     private GameData playerOneGameData;
 
@@ -23,16 +25,23 @@ public class GameRunner {
     public GameRunner(
             GameCreator gameCreator,
             CurrentShapeMovementService currentShapeMovementService,
-            RandomNextShapeService randomNextShapeService
+            RandomNextShapeService randomNextShapeService,
+            PlayerOneControls playerOneControls
     ) {
         this.gameCreator = gameCreator;
         this.currentShapeMovementService = currentShapeMovementService;
         this.randomNextShapeService = randomNextShapeService;
+        this.playerOneControls = playerOneControls;
     }
 
     public void initialiseOnePlayer() {
         playerOneGameData = gameCreator.createGame();
 
+        final GamePlayerControlService playerEventListener = new GamePlayerControlService(playerOneGameData);
+        playerOneControls.addListener(playerEventListener);
+
+
+        // Adding random block for testing
         final List<Row> rowData = playerOneGameData.getRowData();
         rowData.get(1).getBlocks().set(4, BlockColours.GREEN_BLOCK);
 

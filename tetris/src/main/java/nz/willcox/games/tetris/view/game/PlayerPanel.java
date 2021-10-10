@@ -58,8 +58,24 @@ public class PlayerPanel extends JPanel implements Listener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        drawEmptyBlocks(g);
         drawBlocks(g);
         drawCurrentShape(g);
+    }
+
+    private void drawEmptyBlocks(Graphics g) {
+        final List<Row> rowData = gameData.getRowData();
+        for (int i = 0; i < rowData.size(); i++) {
+            final List<Block> blocks = rowData.get(i).getBlocks();
+            for (int j = 0; j < blocks.size(); j++) {
+
+                final LocationPoint locationPoint = new LocationPoint.Builder()
+                        .topX(j*BLOCK_WIDTH)
+                        .topY(HEIGHT - (i+1)*BLOCK_HEIGHT)
+                        .build();
+                drawBlock(g, BlockColours.EMPTY_BLOCK, locationPoint);
+            }
+        }
     }
 
     private void drawCurrentShape(Graphics g) {
@@ -81,6 +97,9 @@ public class PlayerPanel extends JPanel implements Listener {
         for (int i = 0; i < rowData.size(); i++) {
             final List<Block> blocks = rowData.get(i).getBlocks();
             for (int j = 0; j < blocks.size(); j++) {
+                if (blocks.get(j) == BlockColours.EMPTY_BLOCK) {
+                    continue;
+                }
 
                 final LocationPoint locationPoint = new LocationPoint.Builder()
                         .topX(j*BLOCK_WIDTH)
@@ -94,10 +113,10 @@ public class PlayerPanel extends JPanel implements Listener {
     private void drawBlock(Graphics g, Block block, LocationPoint locationPoint) {
         g.setColor(getBlockBorderColour(block));
         g.fillRect(
-                locationPoint.getTopX(),
-                locationPoint.getTopY(),
-                BLOCK_WIDTH,
-                BLOCK_HEIGHT
+                locationPoint.getTopX() - BLOCK_BORDER_WIDTH,
+                locationPoint.getTopY() - BLOCK_BORDER_WIDTH,
+                BLOCK_WIDTH + (2*BLOCK_BORDER_WIDTH),
+                BLOCK_HEIGHT + (2*BLOCK_BORDER_WIDTH)
         );
         g.setColor(getBlockColour(block));
         g.fillRect(

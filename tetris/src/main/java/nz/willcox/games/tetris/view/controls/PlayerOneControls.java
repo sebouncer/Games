@@ -1,9 +1,11 @@
 package nz.willcox.games.tetris.view.controls;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+@Singleton
 public class PlayerOneControls extends PlayerControls implements KeyListener {
 
     private static final int LEFT = KeyEvent.VK_A;

@@ -46,7 +46,7 @@ public class CurrentShapeMovementService {
             if (collision) {
                 hasCollided = true;
             }
-            System.out.println(" Collision = " + collision);
+//            System.out.println(" Collision = " + collision);
         }
 
         if (hasCollided) {
@@ -86,7 +86,7 @@ public class CurrentShapeMovementService {
         final int column = getColumn(newLocationXPoint);
         final int row = getRow(newLocationYPoint);
 
-        System.out.print("row = " +row + "   column = " + column);
+//        System.out.print("row = " +row + "   column = " + column);
 
 //        if (column < 0 || column >= NUM_COLUMNS || row < 0) {
         if (row < 0) {

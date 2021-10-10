@@ -48,6 +48,7 @@ public class GamePanel extends JPanel implements TetrisPanel {
 
     public void initialise() {
         gameRunner.initialiseOnePlayer();
+        addKeyListener(playerOneControls);
 
         final PlayerBorderPanel playerBorderPanel = new PlayerBorderPanel.Factory().create(gameRunner.getPlayerOneGameData(), playerOneControls);
         playerBorderPanels.add(playerBorderPanel);
@@ -55,6 +56,7 @@ public class GamePanel extends JPanel implements TetrisPanel {
         add(playerBorderPanel);
 
         this.setFocusable(true);
+        this.requestFocus();
     }
 
     @Override
@@ -65,6 +67,8 @@ public class GamePanel extends JPanel implements TetrisPanel {
     @Override
     public void destroy() {
         playerBorderPanels.forEach(PlayerBorderPanel::destroy);
+
+        removeKeyListener(playerOneControls);
     }
 
     public void paintComponent(Graphics g) {

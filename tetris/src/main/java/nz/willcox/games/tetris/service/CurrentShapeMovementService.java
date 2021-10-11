@@ -10,6 +10,7 @@ import nz.willcox.games.tetris.model.game.shape.LocationPoint;
 import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 import static nz.willcox.games.tetris.Constants.NUM_COLUMNS;
@@ -19,8 +20,14 @@ public class CurrentShapeMovementService {
 
     private static final int DOWNWARDS_MOVEMENT = Constants.BLOCK_HEIGHT/4;
 
+    private final GameCreator gameCreator;
+
     @Inject
-    public CurrentShapeMovementService() {}
+    public CurrentShapeMovementService(
+            GameCreator gameCreator
+    ) {
+        this.gameCreator = gameCreator;
+    }
 
     public boolean willCollideOnMove(GameData gameData) {
         final CurrentShape currentShape = gameData.getCurrentShape();
@@ -46,13 +53,15 @@ public class CurrentShapeMovementService {
             if (collision) {
                 hasCollided = true;
             }
-//            System.out.println(" Collision = " + collision);
         }
 
         if (hasCollided) {
             // If any block outside the top of grid, then game over
             saveCurrentShapeIntoGrid(gameData.getCurrentShape(), gameData.getRowData());
-            gameData.getCurrentShape().removeBlocks();
+            currentShape.removeBlocks();
+
+            checkForLines(gameData.getRowData());
+            // Check for line/s
         } else {
             for (ShapeBlock shapeBlock : currentShape.getShapeBlocks()) {
                 final int newLocationYPoint = getNewLocationYPoint(shapeBlock);
@@ -60,6 +69,26 @@ public class CurrentShapeMovementService {
             }
         }
         currentShape.triggerListeners();
+    }
+
+    private void checkForLines(List<Row> rowData) {
+        final List<Row> fillRows = new ArrayList<>();
+        for (Row row : rowData) {
+            boolean fillLine = true;
+            for (Block block : row.getBlocks()) {
+                if (block == BlockColours.EMPTY_BLOCK) {
+                    fillLine = false;
+                    break;
+                }
+            }
+            if (fillLine) {
+                fillRows.add(row);
+            }
+        }
+        for (Row row : fillRows) {
+            rowData.remove(row);
+            rowData.add(gameCreator.createRow());
+        }
     }
 
     private void saveCurrentShapeIntoGrid(
@@ -86,9 +115,6 @@ public class CurrentShapeMovementService {
         final int column = getColumn(newLocationXPoint);
         final int row = getRow(newLocationYPoint);
 
-//        System.out.print("row = " +row + "   column = " + column);
-
-//        if (column < 0 || column >= NUM_COLUMNS || row < 0) {
         if (row < 0) {
             return true;
         }

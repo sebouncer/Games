@@ -49,7 +49,7 @@ public class GameCreator {
         return rowData;
     }
 
-    private Row createRow() {
+    public Row createRow() {
         final List<Block> blocks = new ArrayList<>();
         for (int i = 0; i < NUM_COLUMNS; i++) {
             blocks.add(EMPTY_BLOCK);

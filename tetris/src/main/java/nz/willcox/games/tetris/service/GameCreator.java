@@ -5,7 +5,6 @@ import nz.willcox.games.tetris.model.game.GameData;
 import nz.willcox.games.tetris.model.game.Row;
 import nz.willcox.games.tetris.model.game.shape.CurrentShape;
 import nz.willcox.games.tetris.model.game.shape.NextShape;
-import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -26,19 +25,26 @@ public class GameCreator {
     }
 
     public GameData createGame() {
-
-        final List<ShapeBlock> shapeBlocks = randomNextShapeService.getRandomNextShapeBlocks();
-
-        final NextShape nextShape = new NextShape();
-        nextShape.setNewShapeBlocks(shapeBlocks);
-
         final List<Row> rowData = createRows();
+
         return new GameData.Builder()
                 .score(INITIAL_SCORE)
                 .rowData(rowData)
-                .currentShape(new CurrentShape())
-                .nextShape(nextShape)
+                .currentShape(createCurrentShape())
+                .nextShape(createNextShape())
                 .build();
+    }
+
+    private CurrentShape createCurrentShape() {
+        final CurrentShape currentShape = new CurrentShape();
+        currentShape.setTetrisShape(randomNextShapeService.createRandomShape());
+        return currentShape;
+    }
+
+    private NextShape createNextShape() {
+        final NextShape nextShape = new NextShape();
+        nextShape.setTetrisShape(randomNextShapeService.createRandomShape());
+        return nextShape;
     }
 
     private List<Row> createRows() {

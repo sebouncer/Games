@@ -4,6 +4,7 @@ import nz.willcox.games.tetris.model.game.Block;
 import nz.willcox.games.tetris.model.game.BlockColours;
 import nz.willcox.games.tetris.model.game.shape.LocationPoint;
 import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
+import nz.willcox.games.tetris.model.game.shape.TetrisShape;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -27,5 +28,17 @@ public class LongFactory implements ShapeFactory {
         shapeBlocks.add(shapePlacement.createShapeBlock(shapePlacement.blockRightOf(startMidLocation), block));
         shapeBlocks.add(shapePlacement.createShapeBlock(shapePlacement.blockRightOf(shapePlacement.blockRightOf(startMidLocation)), block));
         return shapeBlocks;
+    }
+
+    @Override
+    public TetrisShape createTetrisShape(LocationPoint startMidLocation) {
+        return new TetrisShape(create(startMidLocation), createRotateLocationPoint(startMidLocation));
+    }
+
+    private LocationPoint createRotateLocationPoint(LocationPoint startMidLocation) {
+        return new LocationPoint.Builder()
+                .topX(startMidLocation.getTopX())
+                .topY(startMidLocation.getTopY())
+                .build();
     }
 }

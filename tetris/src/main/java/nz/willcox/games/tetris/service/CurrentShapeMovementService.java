@@ -6,69 +6,59 @@ import nz.willcox.games.tetris.model.game.BlockColours;
 import nz.willcox.games.tetris.model.game.GameData;
 import nz.willcox.games.tetris.model.game.Row;
 import nz.willcox.games.tetris.model.game.shape.CurrentShape;
-import nz.willcox.games.tetris.model.game.shape.LocationPoint;
+import nz.willcox.games.tetris.model.game.shape.NextShape;
 import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
+import nz.willcox.games.tetris.model.game.shape.TetrisShape;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static nz.willcox.games.tetris.Constants.NUM_COLUMNS;
 import static nz.willcox.games.tetris.Constants.NUM_ROWS;
 
 public class CurrentShapeMovementService {
 
-    private static final int DOWNWARDS_MOVEMENT = Constants.BLOCK_HEIGHT/4;
-
     private final GameCreator gameCreator;
+    private final ShapeMovementService shapeMovementService;
+    private final RandomNextShapeService randomNextShapeService;
 
     @Inject
     public CurrentShapeMovementService(
-            GameCreator gameCreator
+            GameCreator gameCreator,
+            ShapeMovementService shapeMovementService,
+            RandomNextShapeService randomNextShapeService
     ) {
         this.gameCreator = gameCreator;
-    }
-
-    public boolean willCollideOnMove(GameData gameData) {
-        final CurrentShape currentShape = gameData.getCurrentShape();
-
-        for (ShapeBlock shapeBlock : currentShape.getShapeBlocks()) {
-            final int newLocationYPoint = getNewLocationYPoint(shapeBlock);
-            boolean collision = checkCollisions(gameData.getRowData(), shapeBlock.getLocationPoint().getTopX(), newLocationYPoint);
-            if (collision) {
-                return true;
-            }
-        }
-        return false;
+        this.shapeMovementService = shapeMovementService;
+        this.randomNextShapeService = randomNextShapeService;
     }
 
     public void moveCurrentShapeDown(GameData gameData) {
         final CurrentShape currentShape = gameData.getCurrentShape();
 
-        boolean hasCollided = false;
+        boolean willCollide = shapeMovementService.willCollideOnMoveDown(gameData);
 
-        for (ShapeBlock shapeBlock : currentShape.getShapeBlocks()) {
-            final int newLocationYPoint = getNewLocationYPoint(shapeBlock);
-            boolean collision = checkCollisions(gameData.getRowData(), shapeBlock.getLocationPoint().getTopX(), newLocationYPoint);
-            if (collision) {
-                hasCollided = true;
-            }
-        }
-
-        if (hasCollided) {
+        if (willCollide) {
             // If any block outside the top of grid, then game over
             saveCurrentShapeIntoGrid(gameData.getCurrentShape(), gameData.getRowData());
-            currentShape.removeBlocks();
+
+            loadNextShapeIntoCurrent(gameData);
 
             checkForLines(gameData.getRowData());
             // Check for line/s
         } else {
-            for (ShapeBlock shapeBlock : currentShape.getShapeBlocks()) {
-                final int newLocationYPoint = getNewLocationYPoint(shapeBlock);
-                shapeBlock.getLocationPoint().setTopY(newLocationYPoint);
-            }
+            shapeMovementService.moveDown(currentShape);
         }
         currentShape.triggerListeners();
+    }
+
+    private void loadNextShapeIntoCurrent(GameData gameData) {
+        final CurrentShape currentShape = gameData.getCurrentShape();
+        final NextShape nextShape = gameData.getNextShape();
+        final TetrisShape nextTetrisShape = nextShape.getTetrisShape();
+        currentShape.setTetrisShape(nextTetrisShape);
+        final TetrisShape randomShape = randomNextShapeService.createRandomShape();
+        nextShape.setTetrisShape(randomShape);
     }
 
     private void checkForLines(List<Row> rowData) {
@@ -100,35 +90,6 @@ public class CurrentShapeMovementService {
             final int row = getRow(shapeBlock.getLocationPoint().getTopY());
             rowData.get(row).getBlocks().set(column, shapeBlock.getBlock());
         }
-    }
-
-    private int getNewLocationYPoint(ShapeBlock shapeBlock) {
-        final LocationPoint locationPoint = shapeBlock.getLocationPoint();
-        return locationPoint.getTopY() + DOWNWARDS_MOVEMENT;
-    }
-
-    private boolean checkCollisions(
-            List<Row> rowData,
-            int newLocationXPoint,
-            int newLocationYPoint
-    ) {
-        final int column = getColumn(newLocationXPoint);
-        final int row = getRow(newLocationYPoint);
-
-        if (row < 0) {
-            return true;
-        }
-
-        if (row >= NUM_ROWS) {
-            return false;
-        }
-
-        final Block block = rowData.get(row).getBlocks().get(column);
-        if (block != BlockColours.EMPTY_BLOCK) {
-            return true;
-        }
-
-        return false;
     }
 
     private int getColumn(int topX) {

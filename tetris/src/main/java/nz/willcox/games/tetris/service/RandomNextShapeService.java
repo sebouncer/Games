@@ -10,7 +10,9 @@ import nz.willcox.games.tetris.factory.SquareFactory;
 import nz.willcox.games.tetris.factory.TriangleFactory;
 import nz.willcox.games.tetris.factory.ZFactory;
 import nz.willcox.games.tetris.model.game.shape.LocationPoint;
+import nz.willcox.games.tetris.model.game.shape.NextShape;
 import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
+import nz.willcox.games.tetris.model.game.shape.TetrisShape;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -42,10 +44,14 @@ public class RandomNextShapeService {
         shapeFactories.add(zFactory);
     }
 
-    public List<ShapeBlock> getRandomNextShapeBlocks() {
+    public TetrisShape createRandomShape() {
+        final ShapeFactory randomShapeFactory = getRandomShapeFactory();
+        return randomShapeFactory.createTetrisShape(createStartMidLocation());
+    }
+
+    private ShapeFactory getRandomShapeFactory() {
         final int randomShapeFactoryIndex = (int) (Math.random() * shapeFactories.size());
-        final ShapeFactory shapeFactory = shapeFactories.get(randomShapeFactoryIndex);
-        return shapeFactory.create(createStartMidLocation());
+        return shapeFactories.get(randomShapeFactoryIndex);
     }
 
     private LocationPoint createStartMidLocation() {

@@ -3,32 +3,35 @@ package nz.willcox.games.tetris.model.game.shape;
 import nz.willcox.games.tetris.model.EventListener;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CurrentShape extends EventListener {
 
-    private final List<ShapeBlock> shapeBlocks;
+    private TetrisShape tetrisShape;
 
     @Inject
-    public CurrentShape() {
-        this.shapeBlocks = new ArrayList<>();
+    public CurrentShape() { }
+
+    public List<ShapeBlock> getShapeBlocks() {
+        if (hasShape()) {
+            return tetrisShape.getShapeBlocks();
+        }
+        return Collections.EMPTY_LIST;
     }
 
-    public void setNewShapeBlocks(List<ShapeBlock> newShapeBlocks) {
-        this.shapeBlocks.addAll(newShapeBlocks);
+    public void setTetrisShape(TetrisShape nextTetrisShape) {
+        this.tetrisShape = nextTetrisShape;
         triggerListeners();
     }
 
-    public List<ShapeBlock> getShapeBlocks() {
-        return shapeBlocks;
+    public TetrisShape getTetrisShape() {
+        return tetrisShape;
     }
 
     public boolean hasShape() {
-        return !shapeBlocks.isEmpty();
-    }
-
-    public void removeBlocks() {
-        this.shapeBlocks.clear();
+        return tetrisShape != null
+                && tetrisShape.getShapeBlocks() != null
+                && tetrisShape.getShapeBlocks().size() > 0;
     }
 }

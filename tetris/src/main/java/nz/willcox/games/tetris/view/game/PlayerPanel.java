@@ -12,10 +12,8 @@ import nz.willcox.games.tetris.view.controls.PlayerControls;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static nz.willcox.games.tetris.Constants.BLOCK_HEIGHT;
 import static nz.willcox.games.tetris.Constants.BLOCK_WIDTH;

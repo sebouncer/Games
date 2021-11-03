@@ -56,8 +56,8 @@ public class RandomNextShapeService {
 
     private LocationPoint createStartMidLocation() {
         return new LocationPoint.Builder()
-                .topX((NUM_COLUMNS -1)/2 * Constants.BLOCK_WIDTH)
-                .topY(0 - Constants.BLOCK_HEIGHT)
+                .topX(Constants.MID_TOP_X)
+                .topY(Constants.MID_TOP_Y)
                 .build();
     }
 }

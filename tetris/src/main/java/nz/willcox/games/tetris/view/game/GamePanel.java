@@ -1,13 +1,8 @@
 package nz.willcox.games.tetris.view.game;
 
-import nz.willcox.games.tetris.Constants;
-import nz.willcox.games.tetris.model.game.Block;
 import nz.willcox.games.tetris.model.page.GameConfig;
-import nz.willcox.games.tetris.model.game.GameData;
-import nz.willcox.games.tetris.model.game.Row;
 import nz.willcox.games.tetris.service.GameRunner;
 import nz.willcox.games.tetris.view.TetrisPanel;
-import nz.willcox.games.tetris.view.controls.PlayerControls;
 import nz.willcox.games.tetris.view.controls.PlayerOneControls;
 import nz.willcox.games.tetris.view.controls.PlayerTwoControls;
 
@@ -27,7 +22,7 @@ public class GamePanel extends JPanel implements TetrisPanel {
     private final PlayerOneControls playerOneControls;
     private final PlayerTwoControls playerTwoControls;
 
-    private List<PlayerBorderPanel> playerBorderPanels;
+    private List<TetrisPanel> tetrisPanels;
 
     @Inject
     public GamePanel(
@@ -40,7 +35,7 @@ public class GamePanel extends JPanel implements TetrisPanel {
         this.gameRunner = gameRunner;
         this.playerOneControls = playerOneControls;
         this.playerTwoControls = playerTwoControls;
-        this.playerBorderPanels = new ArrayList<>();
+        this.tetrisPanels = new ArrayList<>();
         setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         setLayout(null);
         setBackground(Color.CYAN);
@@ -50,10 +45,12 @@ public class GamePanel extends JPanel implements TetrisPanel {
         gameRunner.initialiseOnePlayer();
         addKeyListener(playerOneControls);
 
-        final PlayerBorderPanel playerBorderPanel = new PlayerBorderPanel.Factory().create(gameRunner.getPlayerOneGameData(), playerOneControls);
-        playerBorderPanels.add(playerBorderPanel);
-        playerBorderPanel.setBounds(50 , 50, PlayerBorderPanel.WIDTH, PlayerBorderPanel.HEIGHT);
-        add(playerBorderPanel);
+        final PlayerGamePanel playerGamePanel = new PlayerGamePanel.Factory().create(gameRunner.getPlayerOneGameData(), playerOneControls);
+
+//        final PlayerBorderPanel playerBorderPanel = new PlayerBorderPanel.Factory().create(gameRunner.getPlayerOneGameData(), playerOneControls);
+        tetrisPanels.add(playerGamePanel);
+        playerGamePanel.setBounds(50 , 50, PlayerGamePanel.WIDTH, PlayerGamePanel.HEIGHT);
+        add(playerGamePanel);
 
         this.setFocusable(true);
         this.requestFocus();
@@ -66,7 +63,7 @@ public class GamePanel extends JPanel implements TetrisPanel {
 
     @Override
     public void destroy() {
-        playerBorderPanels.forEach(PlayerBorderPanel::destroy);
+        tetrisPanels.forEach(TetrisPanel::destroy);
 
         removeKeyListener(playerOneControls);
     }

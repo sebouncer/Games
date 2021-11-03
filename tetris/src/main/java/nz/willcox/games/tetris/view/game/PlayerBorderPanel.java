@@ -14,8 +14,8 @@ import static nz.willcox.games.tetris.Constants.NUM_ROWS;
 public class PlayerBorderPanel extends JPanel {
 
     private static final int BORDER_WIDTH = 2;
-    public static final int WIDTH = BORDER_WIDTH * 2 + BLOCK_WIDTH * NUM_COLUMNS;
-    public static final int HEIGHT = BORDER_WIDTH * 2 + BLOCK_HEIGHT * NUM_ROWS;
+    public static final int WIDTH = BORDER_WIDTH * 2 + PlayerPanel.WIDTH;
+    public static final int HEIGHT = BORDER_WIDTH * 2 + PlayerPanel.HEIGHT;
 
     private final GameData gameData;
     private final PlayerControls playerControls;
@@ -23,17 +23,18 @@ public class PlayerBorderPanel extends JPanel {
 
     public PlayerBorderPanel(
             GameData gameData,
-            PlayerControls playerControls
+            PlayerControls playerControls,
+            PlayerPanel playerPanel
     ) {
         this.gameData = gameData;
         this.playerControls = playerControls;
-        setSize(WIDTH + BORDER_WIDTH*2, HEIGHT + BORDER_WIDTH*2);
-        setLayout(null);
-//        setBackground(Color.BLACK);
+        this.playerPanel = playerPanel;
 
-        playerPanel = new PlayerPanel.Factory().create(gameData, playerControls);
-        playerPanel.setBounds(BORDER_WIDTH , BORDER_WIDTH, PlayerPanel.WIDTH, PlayerPanel.HEIGHT);
-        add(playerPanel);
+        setSize(WIDTH, HEIGHT);
+        setLayout(null);
+
+        this.playerPanel.setBounds(BORDER_WIDTH , BORDER_WIDTH, PlayerPanel.WIDTH, PlayerPanel.HEIGHT);
+        add(this.playerPanel);
     }
 
     public void paintComponent(Graphics g) {
@@ -58,7 +59,8 @@ public class PlayerBorderPanel extends JPanel {
                 GameData gameData,
                 PlayerControls playerControls
         ) {
-            return new PlayerBorderPanel(gameData, playerControls);
+            final PlayerPanel playerPanel = new PlayerPanel.Factory().create(gameData, playerControls);
+            return new PlayerBorderPanel(gameData, playerControls, playerPanel);
         }
     }
 }

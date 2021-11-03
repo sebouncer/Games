@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static nz.willcox.games.tetris.Constants.BLOCK_HEIGHT;
 import static nz.willcox.games.tetris.Constants.BLOCK_WIDTH;
@@ -28,29 +29,17 @@ public class PlayerPanel extends JPanel implements Listener {
 
     private final GameData gameData;
     private final PlayerControls playerControls;
-    private final HashMap<Block, Color> colourBlocks;
+    private final PlayerBlockColours playerBlockColours;
 
     public PlayerPanel(
             GameData gameData,
-            PlayerControls playerControls
+            PlayerControls playerControls,
+            PlayerBlockColours playerBlockColours
     ) {
         this.gameData = gameData;
         this.playerControls = playerControls;
-        this.colourBlocks = new HashMap<>();
-        defineBlockColors();
+        this.playerBlockColours = playerBlockColours;
         gameData.getCurrentShape().addListener(this);
-    }
-
-    private void defineBlockColors() {
-        colourBlocks.put(BlockColours.EMPTY_BLOCK, Color.WHITE);
-        colourBlocks.put(BlockColours.YELLOW_BLOCK, Color.YELLOW);
-        colourBlocks.put(BlockColours.GREEN_BLOCK, Color.GREEN);
-        colourBlocks.put(BlockColours.ORANGE_BLOCK, Color.ORANGE);
-        colourBlocks.put(BlockColours.DARK_BLUE_BLOCK, new Color(0, 0,255));
-        colourBlocks.put(BlockColours.RED_BLOCK, Color.RED);
-        colourBlocks.put(BlockColours.CYAN_BLOCK, Color.CYAN);
-        colourBlocks.put(BlockColours.PURPLE_BLOCK, new Color(102, 0,153));
-
     }
 
     public void paintComponent(Graphics g) {
@@ -126,14 +115,11 @@ public class PlayerPanel extends JPanel implements Listener {
     }
 
     private Color getBlockColour(Block block) {
-        return colourBlocks.get(block);
+        return playerBlockColours.getBlockColour(block);
     }
 
     private Color getBlockBorderColour(Block block) {
-        if (block != BlockColours.EMPTY_BLOCK) {
-            return Color.BLACK;
-        }
-        return Color.LIGHT_GRAY;
+        return playerBlockColours.getBlockBorderColour(block);
     }
 
     public void destroy() {
@@ -150,7 +136,8 @@ public class PlayerPanel extends JPanel implements Listener {
                 GameData gameData,
                 PlayerControls playerControls
         ) {
-            return new PlayerPanel(gameData, playerControls);
+            final PlayerBlockColours playerBlockColours = new PlayerBlockColours();
+            return new PlayerPanel(gameData, playerControls, playerBlockColours);
         }
     }
 }

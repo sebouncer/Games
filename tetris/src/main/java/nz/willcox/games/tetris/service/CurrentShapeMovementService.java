@@ -4,6 +4,7 @@ import nz.willcox.games.tetris.Constants;
 import nz.willcox.games.tetris.model.game.Block;
 import nz.willcox.games.tetris.model.game.BlockColours;
 import nz.willcox.games.tetris.model.game.GameData;
+import nz.willcox.games.tetris.model.game.Lines;
 import nz.willcox.games.tetris.model.game.Row;
 import nz.willcox.games.tetris.model.game.shape.CurrentShape;
 import nz.willcox.games.tetris.model.game.shape.NextShape;
@@ -44,8 +45,8 @@ public class CurrentShapeMovementService {
 
             loadNextShapeIntoCurrent(gameData);
 
-            checkForLines(gameData.getRowData());
-            // Check for line/s
+            final List<Row> fillLines = getFillLines(gameData.getRowData());
+            removeLines(gameData.getRowData(), fillLines, gameData.getLines());
         } else {
             shapeMovementService.moveDown(currentShape);
         }
@@ -61,7 +62,7 @@ public class CurrentShapeMovementService {
         nextShape.setTetrisShape(randomShape);
     }
 
-    private void checkForLines(List<Row> rowData) {
+    private List<Row> getFillLines(List<Row> rowData) {
         final List<Row> fillRows = new ArrayList<>();
         for (Row row : rowData) {
             boolean fillLine = true;
@@ -75,9 +76,18 @@ public class CurrentShapeMovementService {
                 fillRows.add(row);
             }
         }
+        return fillRows;
+    }
+
+    private void removeLines(
+            List<Row> rowData,
+            List<Row> fillRows,
+            Lines lines
+    ) {
         for (Row row : fillRows) {
             rowData.remove(row);
             rowData.add(gameCreator.createRow());
+            lines.setLines(lines.getLines() + 1);
         }
     }
 

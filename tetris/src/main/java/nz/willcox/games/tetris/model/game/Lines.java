@@ -18,5 +18,6 @@ public class Lines extends EventListener {
 
     public void setLines(int lines) {
         this.lines = lines;
+        this.triggerListeners();
     }
 }

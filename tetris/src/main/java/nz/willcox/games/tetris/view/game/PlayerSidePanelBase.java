@@ -31,6 +31,13 @@ public class PlayerSidePanelBase {
 
     public void drawContentStringCenter(
             Graphics g,
+            int contentNumber
+    ) {
+        drawContentStringCenter(g, String.valueOf(contentNumber));
+    }
+
+    public void drawContentStringCenter(
+            Graphics g,
             String contentString
     ) {
         CenterText.drawStringCenter(g, 0, getContentStartY(), WIDTH, getContentHeight(), contentString);

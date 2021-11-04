@@ -36,7 +36,7 @@ public class PlayerSideLevelPanel extends JPanel implements Listener {
         super.paintComponent(g);
         playerSidePanelBase.drawBorder(g);
         playerSidePanelBase.drawTitle(g, TITLE);
-        playerSidePanelBase.drawContentStringCenter(g, "" + gameData.getLevel().getLevel());
+        playerSidePanelBase.drawContentStringCenter(g, gameData.getLevel().getLevel());
     }
 
     @Override

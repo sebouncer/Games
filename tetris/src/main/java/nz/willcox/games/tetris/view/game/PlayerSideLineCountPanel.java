@@ -36,7 +36,7 @@ public class PlayerSideLineCountPanel extends JPanel implements Listener {
         super.paintComponent(g);
         playerSidePanelBase.drawBorder(g);
         playerSidePanelBase.drawTitle(g, TITLE);
-        playerSidePanelBase.drawContentStringCenter(g, "" + gameData.getLines().getLines());
+        playerSidePanelBase.drawContentStringCenter(g, gameData.getLines().getLines());
     }
 
     @Override

@@ -43,7 +43,7 @@ public class PlayerSideScorePanel extends JPanel implements Listener {
 
     private void drawScore(Graphics g) {
         final int score = gameData.getScore().getScore();
-        playerSidePanelBase.drawContentStringCenter(g, ""+score);
+        playerSidePanelBase.drawContentStringCenter(g, score);
     }
 
     @Override

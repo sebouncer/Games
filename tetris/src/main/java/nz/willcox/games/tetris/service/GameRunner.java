@@ -48,12 +48,6 @@ public class GameRunner {
         final GamePlayerControlService playerEventListener = new GamePlayerControlService(playerOneGameData, shapeMovementService);
         playerOneControls.addListener(playerEventListener);
 
-
-        // Adding random block for testing
-        final List<Row> rowData = playerOneGameData.getRowData();
-        rowData.get(1).getBlocks().set(4, BlockColours.GREEN_BLOCK);
-
-
         new Timer().scheduleAtFixedRate(new GameActionTimerTask(), 1000, 100);
     }
 
@@ -70,7 +64,6 @@ public class GameRunner {
             // if collided, move next shape to current
             // move shape
             currentShapeMovementService.moveCurrentShapeDown(playerOneGameData);
-
         }
     }
 }

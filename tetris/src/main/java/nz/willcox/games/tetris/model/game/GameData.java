@@ -10,13 +10,17 @@ public class GameData {
     private final List<Row> rowData;
     private CurrentShape currentShape;
     private NextShape nextShape;
-    private int score;
+    private final Score score;
+    private final Lines lines;
+    private final Level level;
 
     private GameData(Builder builder) {
         this.rowData = builder.rowData;
         this.currentShape = builder.currentShape;
         this.nextShape = builder.nextShape;
         this.score = builder.score;
+        this.lines = builder.lines;
+        this.level = builder.level;
     }
 
     public List<Row> getRowData() {
@@ -35,19 +39,25 @@ public class GameData {
         this.currentShape = currentShape;
     }
 
-    public int getScore() {
+    public Score getScore() {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public Lines getLines() {
+        return lines;
+    }
+
+    public Level getLevel() {
+        return level;
     }
 
     public static class Builder {
         private List<Row> rowData;
         private CurrentShape currentShape;
         private NextShape nextShape;
-        private int score;
+        private Score score;
+        private Lines lines;
+        private Level level;
 
         public Builder rowData(List<Row> rowData) {
             this.rowData = rowData;
@@ -64,8 +74,18 @@ public class GameData {
             return this;
         }
 
-        public Builder score(int score) {
+        public Builder score(Score score) {
             this.score = score;
+            return this;
+        }
+
+        public Builder lines(Lines lines) {
+            this.lines = lines;
+            return this;
+        }
+
+        public Builder level(Level level) {
+            this.level = level;
             return this;
         }
 

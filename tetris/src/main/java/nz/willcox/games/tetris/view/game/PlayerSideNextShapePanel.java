@@ -7,7 +7,6 @@ import nz.willcox.games.tetris.model.game.GameData;
 import nz.willcox.games.tetris.model.game.shape.LocationPoint;
 import nz.willcox.games.tetris.model.game.shape.NextShape;
 import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
-import nz.willcox.games.tetris.view.util.CenterText;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,24 +17,25 @@ import static nz.willcox.games.tetris.Constants.MID_TOP_Y;
 
 public class PlayerSideNextShapePanel extends JPanel implements Listener {
 
-    public static final int WIDTH = 100;
-    public static final int HEIGHT = 100;
+    public static final int WIDTH = PlayerSidePanelBase.WIDTH;
+    public static final int HEIGHT = PlayerSidePanelBase.HEIGHT;
 
-    private static final int BORDER_WIDTH = 2;
-    private static final int TITLE_HEIGHT = 20;
-    private static final String NEXT_SHAPE = "NEXT SHAPE";
-    private static final int BLOCK_HEIGHT = 10;
-    private static final int BLOCK_WIDTH = 10;
+    private static final String TITLE = "NEXT SHAPE";
+    private static final int BLOCK_HEIGHT = 15;
+    private static final int BLOCK_WIDTH = 15;
 
     private final GameData gameData;
     private final PlayerBlockColours playerBlockColours;
+    private final PlayerSidePanelBase playerSidePanelBase;
 
     public PlayerSideNextShapePanel(
             GameData gameData,
-            PlayerBlockColours playerBlockColours
+            PlayerBlockColours playerBlockColours,
+            PlayerSidePanelBase playerSidePanelBase
     ) {
         this.gameData = gameData;
         this.playerBlockColours = playerBlockColours;
+        this.playerSidePanelBase = playerSidePanelBase;
 
         setSize(WIDTH, HEIGHT);
         setLayout(null);
@@ -48,8 +48,8 @@ public class PlayerSideNextShapePanel extends JPanel implements Listener {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        drawBorder(g);
-        drawTitle(g);
+        playerSidePanelBase.drawBorder(g);
+        playerSidePanelBase.drawTitle(g, TITLE);
         drawNextShape(g);
     }
 
@@ -72,15 +72,11 @@ public class PlayerSideNextShapePanel extends JPanel implements Listener {
     }
 
     private int getNewY(LocationPoint locationPoint) {
-        return (locationPoint.getTopY() - MID_TOP_Y) / Constants.BLOCK_HEIGHT * BLOCK_HEIGHT + getMidHeightOfThisPanel();
+        return (locationPoint.getTopY() - MID_TOP_Y) / Constants.BLOCK_HEIGHT * BLOCK_HEIGHT + playerSidePanelBase.getMidHeightOfThisPanel();
     }
 
     private int getMidOfThisPanel() {
         return WIDTH/2;
-    }
-
-    private int getMidHeightOfThisPanel() {
-        return TITLE_HEIGHT + (HEIGHT - TITLE_HEIGHT)/2;
     }
 
     private void drawBlock(
@@ -107,19 +103,6 @@ public class PlayerSideNextShapePanel extends JPanel implements Listener {
         );
     }
 
-    private void drawTitle(Graphics g) {
-        g.setColor(Color.BLACK);
-        CenterText.drawStringCenter(g, 0, BORDER_WIDTH, WIDTH, TITLE_HEIGHT, NEXT_SHAPE);
-    }
-
-    private void drawBorder(Graphics g) {
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
-        g.setColor(Color.WHITE);
-        g.fillRect(BORDER_WIDTH, BORDER_WIDTH, WIDTH - 2*BORDER_WIDTH, TITLE_HEIGHT - BORDER_WIDTH);
-        g.fillRect(BORDER_WIDTH, TITLE_HEIGHT + BORDER_WIDTH, WIDTH - 2*BORDER_WIDTH, HEIGHT - (TITLE_HEIGHT + 2*BORDER_WIDTH));
-    }
-
     @Override
     public void eventTrigger() {
         repaint();
@@ -130,7 +113,8 @@ public class PlayerSideNextShapePanel extends JPanel implements Listener {
                 GameData gameData
         ) {
             final PlayerBlockColours playerBlockColours = new PlayerBlockColours();
-            return new PlayerSideNextShapePanel(gameData, playerBlockColours);
+            final PlayerSidePanelBase playerSidePanelBase = new PlayerSidePanelBase();
+            return new PlayerSideNextShapePanel(gameData, playerBlockColours, playerSidePanelBase);
         }
     }
 }

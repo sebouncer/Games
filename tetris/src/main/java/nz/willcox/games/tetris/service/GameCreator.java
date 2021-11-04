@@ -2,7 +2,10 @@ package nz.willcox.games.tetris.service;
 
 import nz.willcox.games.tetris.model.game.Block;
 import nz.willcox.games.tetris.model.game.GameData;
+import nz.willcox.games.tetris.model.game.Level;
+import nz.willcox.games.tetris.model.game.Lines;
 import nz.willcox.games.tetris.model.game.Row;
+import nz.willcox.games.tetris.model.game.Score;
 import nz.willcox.games.tetris.model.game.shape.CurrentShape;
 import nz.willcox.games.tetris.model.game.shape.NextShape;
 
@@ -16,7 +19,6 @@ import static nz.willcox.games.tetris.model.game.BlockColours.EMPTY_BLOCK;
 
 public class GameCreator {
 
-    private static final int INITIAL_SCORE = 0;
     private final RandomNextShapeService randomNextShapeService;
 
     @Inject
@@ -28,7 +30,9 @@ public class GameCreator {
         final List<Row> rowData = createRows();
 
         return new GameData.Builder()
-                .score(INITIAL_SCORE)
+                .score(new Score())
+                .lines(new Lines())
+                .level(new Level())
                 .rowData(rowData)
                 .currentShape(createCurrentShape())
                 .nextShape(createNextShape())

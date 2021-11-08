@@ -3,8 +3,6 @@ package nz.willcox.games.tetris.service.game;
 import nz.willcox.games.tetris.model.game.GameData;
 import nz.willcox.games.tetris.model.game.Row;
 import nz.willcox.games.tetris.model.game.shape.CurrentShape;
-import nz.willcox.games.tetris.service.CurrentShapeMovementService;
-import nz.willcox.games.tetris.service.ShapeMovementService;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

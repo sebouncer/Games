@@ -1,7 +1,6 @@
-package nz.willcox.games.tetris.service;
+package nz.willcox.games.tetris.service.game;
 
 import nz.willcox.games.tetris.model.game.GameData;
-import nz.willcox.games.tetris.service.game.DropBlockService;
 import nz.willcox.games.tetris.view.controls.PlayerEventListener;
 
 public class GamePlayerControlService implements PlayerEventListener {

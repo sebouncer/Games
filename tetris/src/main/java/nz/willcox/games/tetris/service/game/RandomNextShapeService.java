@@ -1,4 +1,4 @@
-package nz.willcox.games.tetris.service;
+package nz.willcox.games.tetris.service.game;
 
 import nz.willcox.games.tetris.Constants;
 import nz.willcox.games.tetris.factory.BackLFactory;

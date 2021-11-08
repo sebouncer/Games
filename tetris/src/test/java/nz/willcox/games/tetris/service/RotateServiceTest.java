@@ -1,6 +1,7 @@
 package nz.willcox.games.tetris.service;
 
 import nz.willcox.games.tetris.model.game.shape.LocationPoint;
+import nz.willcox.games.tetris.service.game.RotateService;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package nz.willcox.games.tetris.service;
+package nz.willcox.games.tetris.service.game;
 
 import nz.willcox.games.tetris.model.game.shape.LocationPoint;
 import nz.willcox.games.tetris.model.game.shape.ShapeBlock;

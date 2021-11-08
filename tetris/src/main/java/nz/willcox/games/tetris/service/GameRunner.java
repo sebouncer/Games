@@ -1,7 +1,11 @@
 package nz.willcox.games.tetris.service;
 
 import nz.willcox.games.tetris.model.game.GameData;
+import nz.willcox.games.tetris.service.game.CurrentShapeMovementService;
 import nz.willcox.games.tetris.service.game.DropBlockService;
+import nz.willcox.games.tetris.service.game.GamePlayerControlService;
+import nz.willcox.games.tetris.service.game.RotateShapeService;
+import nz.willcox.games.tetris.service.game.ShapeMovementService;
 import nz.willcox.games.tetris.view.controls.PlayerOneControls;
 
 import javax.inject.Inject;

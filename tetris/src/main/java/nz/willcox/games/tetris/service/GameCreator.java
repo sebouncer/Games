@@ -8,6 +8,7 @@ import nz.willcox.games.tetris.model.game.Row;
 import nz.willcox.games.tetris.model.game.Score;
 import nz.willcox.games.tetris.model.game.shape.CurrentShape;
 import nz.willcox.games.tetris.model.game.shape.NextShape;
+import nz.willcox.games.tetris.service.game.RandomNextShapeService;
 
 import javax.inject.Inject;
 import java.util.ArrayList;

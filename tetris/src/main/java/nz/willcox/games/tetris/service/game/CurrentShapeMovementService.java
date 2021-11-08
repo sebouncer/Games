@@ -1,4 +1,4 @@
-package nz.willcox.games.tetris.service;
+package nz.willcox.games.tetris.service.game;
 
 import nz.willcox.games.tetris.Constants;
 import nz.willcox.games.tetris.model.game.Block;
@@ -10,7 +10,7 @@ import nz.willcox.games.tetris.model.game.shape.CurrentShape;
 import nz.willcox.games.tetris.model.game.shape.NextShape;
 import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
 import nz.willcox.games.tetris.model.game.shape.TetrisShape;
-import nz.willcox.games.tetris.service.game.ScoreService;
+import nz.willcox.games.tetris.service.GameCreator;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

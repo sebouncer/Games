@@ -18,5 +18,6 @@ public class Level extends EventListener {
 
     public void setLevel(int level) {
         this.level = level;
+        triggerListeners();
     }
 }

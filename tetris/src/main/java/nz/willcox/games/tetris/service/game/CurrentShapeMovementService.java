@@ -26,18 +26,21 @@ public class CurrentShapeMovementService {
     private final ShapeMovementService shapeMovementService;
     private final RandomNextShapeService randomNextShapeService;
     private final ScoreService scoreService;
+    private final LevelService levelService;
 
     @Inject
     public CurrentShapeMovementService(
             GameCreator gameCreator,
             ShapeMovementService shapeMovementService,
             RandomNextShapeService randomNextShapeService,
-            ScoreService scoreService
+            ScoreService scoreService,
+            LevelService levelService
     ) {
         this.gameCreator = gameCreator;
         this.shapeMovementService = shapeMovementService;
         this.randomNextShapeService = randomNextShapeService;
         this.scoreService = scoreService;
+        this.levelService = levelService;
     }
 
     public void moveCurrentShapeDown(GameData gameData) {
@@ -54,6 +57,7 @@ public class CurrentShapeMovementService {
             final List<Row> fillLines = getFillLines(gameData.getRowData());
             removeLines(gameData.getRowData(), fillLines, gameData.getLines());
             scoreService.addLinesToScore(gameData.getScore(), fillLines.size());
+            levelService.updateLevel(gameData);
         } else {
             shapeMovementService.moveDown(currentShape);
         }

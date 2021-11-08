@@ -52,7 +52,8 @@ public class GameRunner {
         );
         playerOneControls.addListener(gamePlayerControlService);
 
-        new Timer().scheduleAtFixedRate(new GameActionTimerTask(), 1000, 100);
+        final Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new GameActionTimerTask(), 1000, 100);
     }
 
     public GameData getPlayerOneGameData() {

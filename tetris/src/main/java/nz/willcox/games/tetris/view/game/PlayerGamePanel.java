@@ -5,6 +5,7 @@ import nz.willcox.games.tetris.view.TetrisPanel;
 import nz.willcox.games.tetris.view.controls.PlayerControls;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class PlayerGamePanel extends JPanel implements TetrisPanel {
 
@@ -29,6 +30,7 @@ public class PlayerGamePanel extends JPanel implements TetrisPanel {
 
         setSize(WIDTH, HEIGHT);
         setLayout(null);
+        setBackground(Color.CYAN);
 
         this.playerBorderPanel.setBounds(0 , 0, PlayerBorderPanel.WIDTH, PlayerBorderPanel.HEIGHT);
         add(this.playerBorderPanel);

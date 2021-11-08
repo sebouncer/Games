@@ -3,6 +3,7 @@ package nz.willcox.games.tetris.view.game;
 import nz.willcox.games.tetris.model.game.GameData;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class PlayerSideBarPanel extends JPanel {
 
@@ -33,6 +34,7 @@ public class PlayerSideBarPanel extends JPanel {
 
         setSize(WIDTH, HEIGHT);
         setLayout(null);
+        setBackground(Color.CYAN);
 
         int y = 0;
         this.playerSideNextShapePanel.setBounds(SIDE_PANEL_WIDTH_INDENT, 0, PlayerSideNextShapePanel.WIDTH, PlayerSideNextShapePanel.HEIGHT);

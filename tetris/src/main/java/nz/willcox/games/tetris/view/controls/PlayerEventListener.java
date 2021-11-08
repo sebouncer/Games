@@ -4,6 +4,7 @@ public interface PlayerEventListener {
 
     void leftAction();
     void downAction();
+    void downActionReleased();
     void upAction();
     void rightAction();
     void buttonStart();

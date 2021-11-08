@@ -124,6 +124,9 @@ public class ButtonPanel extends JPanel implements PlayerEventListener {
     }
 
     @Override
+    public void downActionReleased() {}
+
+    @Override
     public void upAction() {
         setSelectedButtonNotSelected();
         decrementSelectedButtonNumber();

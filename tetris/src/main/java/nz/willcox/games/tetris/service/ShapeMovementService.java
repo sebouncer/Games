@@ -11,6 +11,7 @@ import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
 import nz.willcox.games.tetris.model.game.shape.TetrisShape;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.List;
 
 import static nz.willcox.games.tetris.Constants.BLOCK_HEIGHT;
@@ -18,6 +19,7 @@ import static nz.willcox.games.tetris.Constants.BLOCK_WIDTH;
 import static nz.willcox.games.tetris.Constants.NUM_COLUMNS;
 import static nz.willcox.games.tetris.Constants.NUM_ROWS;
 
+@Singleton
 public class ShapeMovementService {
 
     private static final int DOWNWARDS_MOVEMENT = Constants.BLOCK_HEIGHT/4;
@@ -27,10 +29,14 @@ public class ShapeMovementService {
 
     public boolean willCollideOnMoveDown(GameData gameData) {
         final CurrentShape currentShape = gameData.getCurrentShape();
+        final List<Row> rowData = gameData.getRowData();
+        return willCollideOnMoveDown(currentShape, rowData);
+    }
 
+    public boolean willCollideOnMoveDown(CurrentShape currentShape, List<Row> rowData) {
         for (ShapeBlock shapeBlock : currentShape.getShapeBlocks()) {
             final int newLocationYPoint = getNewLocationYPointDown(shapeBlock);
-            boolean collision = checkCollisions(gameData.getRowData(), shapeBlock.getLocationPoint().getTopX(), newLocationYPoint);
+            boolean collision = checkCollisions(rowData, shapeBlock.getLocationPoint().getTopX(), newLocationYPoint);
             if (collision) {
                 return true;
             }

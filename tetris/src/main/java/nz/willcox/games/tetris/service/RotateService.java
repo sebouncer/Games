@@ -5,7 +5,9 @@ import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
 import nz.willcox.games.tetris.model.game.shape.TetrisShape;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class RotateService {
 
     @Inject

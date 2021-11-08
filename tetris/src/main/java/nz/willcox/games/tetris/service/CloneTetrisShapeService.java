@@ -5,9 +5,11 @@ import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
 import nz.willcox.games.tetris.model.game.shape.TetrisShape;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Singleton
 public class CloneTetrisShapeService {
 
     @Inject

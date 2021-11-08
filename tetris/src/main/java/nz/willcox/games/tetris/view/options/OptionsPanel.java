@@ -72,6 +72,9 @@ public class OptionsPanel extends JPanel implements TetrisPanel, PlayerEventList
     public void downAction() {}
 
     @Override
+    public void downActionReleased() {}
+
+    @Override
     public void upAction() {}
 
     @Override

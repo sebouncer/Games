@@ -10,28 +10,34 @@ import nz.willcox.games.tetris.model.game.shape.CurrentShape;
 import nz.willcox.games.tetris.model.game.shape.NextShape;
 import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
 import nz.willcox.games.tetris.model.game.shape.TetrisShape;
+import nz.willcox.games.tetris.service.game.ScoreService;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
 import static nz.willcox.games.tetris.Constants.NUM_ROWS;
 
+@Singleton
 public class CurrentShapeMovementService {
 
     private final GameCreator gameCreator;
     private final ShapeMovementService shapeMovementService;
     private final RandomNextShapeService randomNextShapeService;
+    private final ScoreService scoreService;
 
     @Inject
     public CurrentShapeMovementService(
             GameCreator gameCreator,
             ShapeMovementService shapeMovementService,
-            RandomNextShapeService randomNextShapeService
+            RandomNextShapeService randomNextShapeService,
+            ScoreService scoreService
     ) {
         this.gameCreator = gameCreator;
         this.shapeMovementService = shapeMovementService;
         this.randomNextShapeService = randomNextShapeService;
+        this.scoreService = scoreService;
     }
 
     public void moveCurrentShapeDown(GameData gameData) {
@@ -47,6 +53,7 @@ public class CurrentShapeMovementService {
 
             final List<Row> fillLines = getFillLines(gameData.getRowData());
             removeLines(gameData.getRowData(), fillLines, gameData.getLines());
+            scoreService.addLinesToScore(gameData.getScore(), fillLines.size());
         } else {
             shapeMovementService.moveDown(currentShape);
         }

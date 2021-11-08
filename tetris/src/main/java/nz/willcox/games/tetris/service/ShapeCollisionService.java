@@ -9,12 +9,14 @@ import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
 import nz.willcox.games.tetris.model.game.shape.TetrisShape;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.List;
 
 import static nz.willcox.games.tetris.Constants.BLOCK_HEIGHT;
 import static nz.willcox.games.tetris.Constants.NUM_COLUMNS;
 import static nz.willcox.games.tetris.Constants.NUM_ROWS;
 
+@Singleton
 public class ShapeCollisionService {
 
     @Inject

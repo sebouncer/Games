@@ -9,6 +9,9 @@ public class AbstractPlayerEventListener implements PlayerEventListener {
     public void downAction() {}
 
     @Override
+    public void downActionReleased() {}
+
+    @Override
     public void upAction() {}
 
     @Override

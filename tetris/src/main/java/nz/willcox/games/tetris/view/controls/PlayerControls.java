@@ -9,6 +9,8 @@ import java.util.function.Consumer;
 
 public abstract class PlayerControls {
 
+    private static final int RELEASED = 50;
+
     private final List<PlayerEventListener> playerEventListeners;
     private final Map<Integer, Consumer<PlayerEventListener>> actions;
 
@@ -25,6 +27,7 @@ public abstract class PlayerControls {
         this.actions = new HashMap<>();
         actions.put(left, PlayerEventListener::leftAction);
         actions.put(down, PlayerEventListener::downAction);
+        actions.put(down + RELEASED, PlayerEventListener::downActionReleased);
         actions.put(up, PlayerEventListener::upAction);
         actions.put(right, PlayerEventListener::rightAction);
         actions.put(start, PlayerEventListener::buttonStart);
@@ -43,12 +46,17 @@ public abstract class PlayerControls {
     public void keyTyped(KeyEvent e) { }
 
     public void keyPressed(KeyEvent e) {
-        final Consumer<PlayerEventListener> playerEventListenerConsumer = actions.get(e.getKeyCode());
+        triggerListeners(actions.get(e.getKeyCode()));
+    }
+
+    public void keyReleased(KeyEvent e) {
+        triggerListeners(actions.get(e.getKeyCode() + RELEASED));
+    }
+
+    private void triggerListeners(final Consumer<PlayerEventListener> playerEventListenerConsumer) {
         if (playerEventListenerConsumer != null) {
             final ArrayList<PlayerEventListener> playerEventListenersClone = new ArrayList<>(playerEventListeners);
             playerEventListenersClone.forEach(playerEventListenerConsumer);
         }
     }
-
-    public void keyReleased(KeyEvent e) {}
 }

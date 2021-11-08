@@ -10,16 +10,14 @@ import nz.willcox.games.tetris.factory.SquareFactory;
 import nz.willcox.games.tetris.factory.TriangleFactory;
 import nz.willcox.games.tetris.factory.ZFactory;
 import nz.willcox.games.tetris.model.game.shape.LocationPoint;
-import nz.willcox.games.tetris.model.game.shape.NextShape;
-import nz.willcox.games.tetris.model.game.shape.ShapeBlock;
 import nz.willcox.games.tetris.model.game.shape.TetrisShape;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
-import static nz.willcox.games.tetris.Constants.NUM_COLUMNS;
-
+@Singleton
 public class RandomNextShapeService {
 
     private final List<ShapeFactory> shapeFactories;
